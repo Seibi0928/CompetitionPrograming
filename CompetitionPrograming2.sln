@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29020.237
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompetitionPrograming2", "CompetitionPrograming2\CompetitionPrograming2.csproj", "{651637B2-E51C-4759-80E5-400E96965D37}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{EE6A021F-B54B-42A6-872E-AB87DE866FE7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{651637B2-E51C-4759-80E5-400E96965D37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{651637B2-E51C-4759-80E5-400E96965D37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{651637B2-E51C-4759-80E5-400E96965D37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{651637B2-E51C-4759-80E5-400E96965D37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE6A021F-B54B-42A6-872E-AB87DE866FE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE6A021F-B54B-42A6-872E-AB87DE866FE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE6A021F-B54B-42A6-872E-AB87DE866FE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE6A021F-B54B-42A6-872E-AB87DE866FE7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C1E5820D-7C3C-491F-826E-2A51BF1851F3}
+	EndGlobalSection
+EndGlobal
