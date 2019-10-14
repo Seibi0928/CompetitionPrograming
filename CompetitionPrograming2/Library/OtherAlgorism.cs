@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace CompetitionPrograming2.Library
 {
-    class OtherAlgorism
+    public sealed class OtherAlgorism
     {
         public static int Lcm(int a, int b) => a * b / Gcd(a, b);
         public static int Gcd(int a, int b)

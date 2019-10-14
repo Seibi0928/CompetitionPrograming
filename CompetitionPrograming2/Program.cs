@@ -64,7 +64,7 @@ namespace CompetitionPrograming2
             item1 = item2;
             item2 = tmp;
         }
-        protected class SetConsole : IDisposable
+        protected sealed class SetConsole : IDisposable
         {
             readonly StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
             public SetConsole()
