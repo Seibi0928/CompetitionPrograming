@@ -83,13 +83,6 @@ namespace CompetitionPrograming2
 
     static class ExtentionsLibrary
     {
-        public static List<T> CopyList<T>(this IReadOnlyList<T> list) => CopyArray(list.ToArray()).ToList();
-        public static T[] CopyArray<T>(this T[] array)
-        {
-            var newArray = new T[array.Length];
-            Array.Copy(array, newArray, array.Length);
-            return newArray;
-        }
         public static T[,] CopyArray<T>(this T[,] array)
         {
             var firstDimentionLength = array.GetLength(0);
