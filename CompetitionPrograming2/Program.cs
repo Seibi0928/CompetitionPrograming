@@ -18,7 +18,7 @@ namespace CompetitionPrograming2
         }
     }
 
-    public class BaseProgram
+    public abstract class BaseProgram
     {
         protected readonly static long divisor = 1000000007;
 
@@ -48,6 +48,14 @@ namespace CompetitionPrograming2
             else if (t == typeof(double))
             {
                 return (T)(object)str.ToDouble();
+            }
+            else if (t == typeof(decimal))
+            {
+                return (T)(object)str.ToDecimal();
+            }
+            else if (t == typeof(BigInteger))
+            {
+                return (T)(object)str.ToBigInteger();
             }
             throw new NotSupportedException();
         }
@@ -117,6 +125,10 @@ namespace CompetitionPrograming2
             {
                 return (IEnumerable<T>)str.Split().Select(double.Parse);
             }
+            if (t == typeof(decimal))
+            {
+                return (IEnumerable<T>)str.Split().Select(decimal.Parse);
+            }
             if (t == typeof(BigInteger))
             {
                 return (IEnumerable<T>)str.Split().Select(BigInteger.Parse);
@@ -129,6 +141,7 @@ namespace CompetitionPrograming2
         public static int ToInt(this char chr) => int.Parse(chr.ToString());
         public static long ToLong(this string str) => long.Parse(str);
         public static double ToDouble(this string str) => double.Parse(str);
+        public static decimal ToDecimal(this string str) => decimal.Parse(str);
         public static BigInteger ToBigInteger(this string str) => BigInteger.Parse(str);
         public static DateTime ToDateTime(this string str) => DateTime.Parse(str);
         public static string StringJoin(this object[] array, string separator) => string.Join(separator, array);
