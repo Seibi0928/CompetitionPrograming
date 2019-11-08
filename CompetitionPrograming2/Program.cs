@@ -9,19 +9,15 @@ namespace CompetitionPrograming2
 {
     public sealed class Program : BaseProgram
     {
-        public static void Main(string[] args)
-        {
-            using (var sc = new SetConsole()) { Solve(); }
-        }
+        public static void Main(string[] args) { using (var sc = new SetConsole()) { Solve(); } }
         public static void Solve()
         {
         }
     }
-
     public abstract class BaseProgram
     {
         protected readonly static long divisor = 1000000007;
-
+        protected static int SafeInf(int margin = 1) => int.MaxValue - margin;
         protected static void Write(object obj) => Console.WriteLine(obj);
         protected static string GetString()
         {
@@ -89,8 +85,7 @@ namespace CompetitionPrograming2
             }
         }
     }
-
-    static class ExtentionsLibrary
+    public static class ExtentionsLibrary
     {
         public static T[,] CopyArray<T>(this T[,] array)
         {
@@ -144,8 +139,8 @@ namespace CompetitionPrograming2
         public static decimal ToDecimal(this string str) => decimal.Parse(str);
         public static BigInteger ToBigInteger(this string str) => BigInteger.Parse(str);
         public static DateTime ToDateTime(this string str) => DateTime.Parse(str);
-        public static string StringJoin(this object[] array, string separator) => string.Join(separator, array);
-        public static string StringJoin<T>(this IEnumerable<T> collection, string separator) => string.Join(separator, collection.Select(c => c.ToString()));
+        public static string StringJoin(this object[] array, string separator = "") => string.Join(separator, array);
+        public static string StringJoin<T>(this IEnumerable<T> collection, string separator = "") => string.Join(separator, collection.Select(c => c.ToString()));
         public static int LowerBound<T>(this IReadOnlyList<T> a, T v) => LowerBound(a, v, Comparer<T>.Default);
         public static int LowerBound<T>(this IReadOnlyList<T> a, T v, Comparer<T> cmp)
         {
@@ -166,7 +161,7 @@ namespace CompetitionPrograming2
             }
             return l;
         }
-        public static int UpperBound<T>(IReadOnlyList<T> a, T v) => UpperBound(a, v, Comparer<T>.Default);
+        public static int UpperBound<T>(this IReadOnlyList<T> a, T v) => UpperBound(a, v, Comparer<T>.Default);
         public static int UpperBound<T>(this IReadOnlyList<T> a, T v, Comparer<T> cmp)
         {
             var l = 0;
@@ -181,7 +176,6 @@ namespace CompetitionPrograming2
             return l;
         }
     }
-
     public sealed class Settings
     {
         public enum Priority : byte

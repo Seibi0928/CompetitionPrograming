@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Test
 {
-    public class ProblemsTest
+    public sealed class ProblemsTest
     {
         [Fact]
         public void Test1()
@@ -25,13 +25,13 @@ namespace Test
             AssertInOut(Input3, Output3);
         }
 
-        //[Fact]
+        [Fact]
         public void Test4()
         {
             AssertInOut(Input4, Output4);
         }
 
-        internal void AssertInOut(string inputFileName, string outputFileName)
+        private void AssertInOut(string inputFileName, string outputFileName)
         {
             using (var input = new StreamReader(inputFileName))
             using (var output = new StringWriter())
@@ -45,14 +45,14 @@ namespace Test
             }
         }
 
-        internal static string Input1 { get; set; } = "Input1.txt";
-        internal static string Input2 { get; set; } = "Input2.txt";
-        internal static string Input3 { get; set; } = "Input3.txt";
-        internal static string Input4 { get; set; } = "Input4.txt";
+        private static readonly string Input1 = "Input1.txt";
+        private static readonly string Input2 = "Input2.txt";
+        private static readonly string Input3 = "Input3.txt";
+        private static readonly string Input4 = "Input4.txt";
 
-        internal static string Output1 { get; set; } = "Output1.txt";
-        internal static string Output2 { get; set; } = "Output2.txt";
-        internal static string Output3 { get; set; } = "Output3.txt";
-        internal static string Output4 { get; set; } = "Output4.txt";
+        private static readonly string Output1 = "Output1.txt";
+        private static readonly string Output2 = "Output2.txt";
+        private static readonly string Output3 = "Output3.txt";
+        private static readonly string Output4 = "Output4.txt";
     }
 }
