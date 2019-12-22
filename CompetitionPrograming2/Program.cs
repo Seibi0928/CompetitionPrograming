@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace CompetitionPrograming2
 {
     public sealed class Program : BaseProgram
     {
-        public static void Main(string[] args) { using (var sc = new SetConsole()) { Solve(); } }
+        public static void Main(string[] _) { using (var sc = new SetConsole()) { Solve(); } }
         public static void Solve()
         {
         }
@@ -17,7 +18,7 @@ namespace CompetitionPrograming2
     public abstract class BaseProgram
     {
         protected readonly static long divisor = 1000000007;
-        protected static int SafeInf(int margin = 1) => int.MaxValue - margin;
+        protected static int SafeInf(int margin = 1) => int.MaxValue - Abs(margin);
         protected static void Write(object obj) => Console.WriteLine(obj);
         protected static string GetString()
         {
@@ -29,29 +30,36 @@ namespace CompetitionPrograming2
         {
             var str = GetString();
             var t = typeof(T);
-            if ((t == typeof(byte)))
+            try
             {
-                return (T)(object)str.ToByte();
+                if ((t == typeof(byte)))
+                {
+                    return (T)(object)str.ToByte();
+                }
+                else if (t == typeof(int))
+                {
+                    return (T)(object)str.ToInt();
+                }
+                else if (t == typeof(long))
+                {
+                    return (T)(object)str.ToLong();
+                }
+                else if (t == typeof(double))
+                {
+                    return (T)(object)str.ToDouble();
+                }
+                else if (t == typeof(decimal))
+                {
+                    return (T)(object)str.ToDecimal();
+                }
+                else if (t == typeof(BigInteger))
+                {
+                    return (T)(object)str.ToBigInteger();
+                }
             }
-            else if (t == typeof(int))
+            catch (OverflowException)
             {
-                return (T)(object)str.ToInt();
-            }
-            else if (t == typeof(long))
-            {
-                return (T)(object)str.ToLong();
-            }
-            else if (t == typeof(double))
-            {
-                return (T)(object)str.ToDouble();
-            }
-            else if (t == typeof(decimal))
-            {
-                return (T)(object)str.ToDecimal();
-            }
-            else if (t == typeof(BigInteger))
-            {
-                return (T)(object)str.ToBigInteger();
+                throw new OverflowException("より大きい数値型を指定してください");
             }
             throw new NotSupportedException();
         }
@@ -103,30 +111,37 @@ namespace CompetitionPrograming2
         }
         public static IEnumerable<T> ConvertEnumerator<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
-            var t = typeof(T);
-            if (t == typeof(byte))
+            try
             {
-                return (IEnumerable<T>)str.Split().Select(byte.Parse);
+                var t = typeof(T);
+                if (t == typeof(byte))
+                {
+                    return (IEnumerable<T>)str.Split().Select(byte.Parse);
+                }
+                if (t == typeof(int))
+                {
+                    return (IEnumerable<T>)str.Split().Select(int.Parse);
+                }
+                if (t == typeof(long))
+                {
+                    return (IEnumerable<T>)str.Split().Select(long.Parse);
+                }
+                if (t == typeof(double))
+                {
+                    return (IEnumerable<T>)str.Split().Select(double.Parse);
+                }
+                if (t == typeof(decimal))
+                {
+                    return (IEnumerable<T>)str.Split().Select(decimal.Parse);
+                }
+                if (t == typeof(BigInteger))
+                {
+                    return (IEnumerable<T>)str.Split().Select(BigInteger.Parse);
+                }
             }
-            if (t == typeof(int))
+            catch (OverflowException)
             {
-                return (IEnumerable<T>)str.Split().Select(int.Parse);
-            }
-            if (t == typeof(long))
-            {
-                return (IEnumerable<T>)str.Split().Select(long.Parse);
-            }
-            if (t == typeof(double))
-            {
-                return (IEnumerable<T>)str.Split().Select(double.Parse);
-            }
-            if (t == typeof(decimal))
-            {
-                return (IEnumerable<T>)str.Split().Select(decimal.Parse);
-            }
-            if (t == typeof(BigInteger))
-            {
-                return (IEnumerable<T>)str.Split().Select(BigInteger.Parse);
+                throw new OverflowException("より大きい数値型を指定してください");
             }
             throw new NotSupportedException();
         }
