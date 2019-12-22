@@ -6,21 +6,40 @@ namespace CompetitionPrograming2.Library
 {
     public class Combination
     {
-        private readonly int[][] p;
-        public Combination(int size)
+        private readonly long max;
+        private readonly long mod;
+        private readonly long[] factorial;
+        private readonly long[] inverse;
+        private readonly long[] factInv;
+
+        public Combination(long max, long mod)
         {
-            p = new int[size + 1][];
-            for (int i = 0; i <= size; i++) { p[i] = new int[size + 1]; }
-            p[0][0] = 1;
-            for (int i = 0; i < size; i++)
+            this.max = max;
+            this.mod = mod;
+            factorial = new long[this.max + 1];
+            inverse = new long[this.max + 1];
+            factInv = new long[this.max + 1];
+
+            factorial[0] = factorial[1] = 1;
+            factInv[0] = factInv[1] = 1;
+            inverse[1] = 1;
+
+            for (int i = 2; i <= this.max; i++)
             {
-                for (int j = 0; j <= i; j++)
-                {
-                    p[i + 1][j] += p[i][j];
-                    p[i + 1][j + 1] += p[i][j];
-                }
+                factorial[i] = factorial[i - 1] * i % this.mod;
+                inverse[i] = this.mod - inverse[this.mod % i] * (this.mod / i) % this.mod;
+                factInv[i] = factInv[i - 1] * inverse[i] % this.mod;
             }
         }
-        public int Get(int n, int k) => p[n][k];
+
+        public long Get(int n, int k)
+        {
+            if (n < k) { return 0; }
+            if (n < 0 || k < 0) { return 0; }
+            if (n == k) { return 1; }
+            if (k == 0) { return 1; }
+            if (k == 1) { return n % mod; }
+            return factorial[n] * (factInv[k] * factInv[n - k] % mod) % mod;
+        }
     }
 }

@@ -8,7 +8,7 @@ namespace Test.LibraryTest
         readonly Combination comb;
         public CombinationTest()
         {
-            comb = new Combination(4000);
+            comb = new Combination(4000, 10000007);
         }
 
         [Fact]
