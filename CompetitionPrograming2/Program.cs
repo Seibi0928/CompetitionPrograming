@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,7 +9,7 @@ namespace CompetitionPrograming2
 {
     public sealed class Program : BaseProgram
     {
-        public static void Main(string[] _) { using (var sc = new SetConsole()) { Solve(); } }
+        public static void Main(string[] _) { using (new SetConsole()) { Solve(); } }
         public static void Solve()
         {
         }
@@ -63,9 +62,13 @@ namespace CompetitionPrograming2
             }
             throw new NotSupportedException();
         }
-        protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
         {
             return GetString().ToArray<T>();
+        }
+        protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        {
+            return GetString().ToList<T>();
         }
         protected static TResult[] GetArray<TResult>(Func<string, TResult> selector)
         {
@@ -103,16 +106,20 @@ namespace CompetitionPrograming2
             Array.Copy(array, newDArray, firstDimentionLength * secondDimentionLength);
             return newDArray;
         }
-        public static T[] ToArray<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        public static T[] ToArray<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
         {
             if (typeof(T) == typeof(string)) { return (T[])(object)str.Split(); }
 
             return str.ConvertEnumerator<T>().ToArray();
         }
-        public static IEnumerable<T> ConvertEnumerator<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        public static List<T> ToList<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
         {
-            try
-            {
+            if (typeof(T) == typeof(string)) { return (List<T>)(object)str.Split().ToList(); }
+
+            return str.ConvertEnumerator<T>().ToList();
+        }
+        public static IEnumerable<T> ConvertEnumerator<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        {
                 var t = typeof(T);
                 if (t == typeof(byte))
                 {
@@ -138,11 +145,6 @@ namespace CompetitionPrograming2
                 {
                     return (IEnumerable<T>)str.Split().Select(BigInteger.Parse);
                 }
-            }
-            catch (OverflowException)
-            {
-                throw new OverflowException("より大きい数値型を指定してください");
-            }
             throw new NotSupportedException();
         }
         public static byte ToByte(this string str) => byte.Parse(str);
