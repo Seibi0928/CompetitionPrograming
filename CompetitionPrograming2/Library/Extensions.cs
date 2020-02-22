@@ -12,25 +12,23 @@ namespace CompetitionPrograming2.Library
         public static T[] NextPermutation<T>(this IEnumerable<T> collection) where T : IComparable
         {
             var array = collection.ToArray();
-            int? ReverseNumIndex = null;
-            var ReverseNum = default(T);
+            int? exchangingNumIndex = null;
             for (int i = 1; i < array.Length; i++)
             {
                 if (array[i - 1].CompareTo(array[i]) >= 0) { continue; }
-                
-                ReverseNum = array[i - 1];
-                ReverseNumIndex = i - 1;
+
+                exchangingNumIndex = i - 1;
             }
 
-            if (ReverseNumIndex is null) { return null; }
+            if (exchangingNumIndex is null) { return null; }
 
             for (int j = array.Length - 1; j >= 0; j--)
             {
-                if (ReverseNum.CompareTo(array[j]) >= 0) { continue; }
+                if (array[(int)exchangingNumIndex].CompareTo(array[j]) >= 0) { continue; }
 
                 var tmp = array[j];
-                array[j] = ReverseNum;
-                array[(int)ReverseNumIndex] = tmp;
+                array[j] = array[(int)exchangingNumIndex];
+                array[(int)exchangingNumIndex] = tmp;
                 break;
             }
             return array;
