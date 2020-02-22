@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Text;
 using static System.Math;
 
 namespace CompetitionPrograming2
@@ -14,14 +12,6 @@ namespace CompetitionPrograming2
         public static void Main(string[] _) { using (new SetConsole()) { Solve(); } }
         public static void Solve()
         {
-            var nk = GetArray<long>();
-            var n = nk[0];
-            var k = nk[1];
-            if (n == 1 && k == 2)
-            {
-                Write(1); return;
-            }
-            Write(Math.Ceiling(Math.Log(n, k)));
         }
     }
     public abstract class BaseProgram
