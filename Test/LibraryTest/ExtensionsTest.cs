@@ -18,9 +18,15 @@ namespace Test.LibraryTest
                 Assert.Equal(new int[] { 1, 3, 2 }, tmp.NextPermutation());
 
                 tmp = new int[] { 1, 3, 2 };
+                Assert.Equal(new int[] { 2, 1, 3 }, tmp.NextPermutation());
+
+                tmp = new int[] { 2, 1, 3 };
                 Assert.Equal(new int[] { 2, 3, 1 }, tmp.NextPermutation());
 
                 tmp = new int[] { 2, 3, 1 };
+                Assert.Equal(new int[] { 3, 1, 2 }, tmp.NextPermutation());
+
+                tmp = new int[] { 3, 1, 2 };
                 Assert.Equal(new int[] { 3, 2, 1 }, tmp.NextPermutation());
             }
 
@@ -46,16 +52,16 @@ namespace Test.LibraryTest
             {
                 var collections = new int[] { 1, 2, 3 }.Permutations();
                 Assert.Equal(new int[] { 1, 3, 2 }, collections.ElementAt(0));
-                Assert.Equal(new int[] { 2, 3, 1 }, collections.ElementAt(1));
-                Assert.Equal(new int[] { 3, 2, 1 }, collections.ElementAt(2));
+                Assert.Equal(new int[] { 2, 1, 3 }, collections.ElementAt(1));
+                Assert.Equal(new int[] { 2, 3, 1 }, collections.ElementAt(2));
             }
 
             [Fact]
             public void 引数以降の組み合わせが辞書順で列挙されること()
             {
                 var collections = new int[] { 1, 3, 2 }.Permutations();
-                Assert.Equal(new int[] { 2, 3, 1 }, collections.ElementAt(0));
-                Assert.Equal(new int[] { 3, 2, 1 }, collections.ElementAt(1));
+                Assert.Equal(new int[] { 2, 1, 3 }, collections.ElementAt(0));
+                Assert.Equal(new int[] { 2, 3, 1 }, collections.ElementAt(1));
             }
         }
     }

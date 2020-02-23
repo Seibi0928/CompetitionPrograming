@@ -108,7 +108,7 @@ namespace CompetitionPrograming2
                 exchangingNumIndex = i - 1;
             }
 
-            if (exchangingNumIndex is null) { return null; }
+            if (exchangingNumIndex == null) { return null; }
 
             for (int j = array.Length - 1; j >= 0; j--)
             {
@@ -117,6 +117,7 @@ namespace CompetitionPrograming2
                 var tmp = array[j];
                 array[j] = array[(int)exchangingNumIndex];
                 array[(int)exchangingNumIndex] = tmp;
+                array = array.Take((int)exchangingNumIndex + 1).Concat(array.Skip((int)exchangingNumIndex + 1).Reverse()).ToArray();
                 break;
             }
             return array;
@@ -125,7 +126,7 @@ namespace CompetitionPrograming2
         {
             var next = collection.NextPermutation();
 
-            while (!(next is null))
+            while (next != null)
             {
                 yield return next;
 
