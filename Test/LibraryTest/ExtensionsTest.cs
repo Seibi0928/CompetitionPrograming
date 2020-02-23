@@ -54,6 +54,8 @@ namespace Test.LibraryTest
                 Assert.Equal(new int[] { 1, 3, 2 }, collections.ElementAt(0));
                 Assert.Equal(new int[] { 2, 1, 3 }, collections.ElementAt(1));
                 Assert.Equal(new int[] { 2, 3, 1 }, collections.ElementAt(2));
+                Assert.Equal(new int[] { 3, 1, 2 }, collections.ElementAt(3));
+                Assert.Equal(new int[] { 3, 2, 1 }, collections.ElementAt(4));
             }
 
             [Fact]
