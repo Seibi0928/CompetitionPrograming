@@ -1,9 +1,9 @@
-﻿using CompetitionPrograming2.Library;
+﻿using CompetitionPrograming2;
+using CompetitionPrograming2.Library;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
-using static CompetitionPrograming2.Settings;
 
 namespace Test.LibraryTest
 {

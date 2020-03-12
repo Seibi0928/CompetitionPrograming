@@ -32,7 +32,7 @@ namespace CompetitionPrograming2.Library
             }
         }
 
-        public long Get(int n, int k)
+        public long Get(long n, long k)
         {
             if (n < k) { return 0; }
             if (n < 0 || k < 0) { return 0; }

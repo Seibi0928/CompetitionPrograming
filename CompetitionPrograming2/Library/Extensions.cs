@@ -9,6 +9,18 @@ namespace CompetitionPrograming2.Library
 {
     public static class ExtentionsLibrary
     {
+        public static long Choose(this int n, int a, long divisor = 1000000007)
+        {
+            long numerator = 1, denominator = 1;
+            for (int i = 0; i < a; i++)
+            {
+                numerator *= n - i;
+                numerator %= divisor;
+                denominator *= i + 1;
+                denominator %= divisor;
+            }
+            return numerator / denominator;
+        }
         public static T[] NextPermutation<T>(this IEnumerable<T> collection) where T : IComparable
         {
             var array = collection.ToArray();

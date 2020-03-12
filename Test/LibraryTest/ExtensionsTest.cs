@@ -66,5 +66,15 @@ namespace Test.LibraryTest
                 Assert.Equal(new int[] { 2, 3, 1 }, collections.ElementAt(1));
             }
         }
+
+        public class ChooseTest
+        {
+            [Fact]
+            public void 組み合わせ数を取得できること()
+            {
+                var num = 4;
+                Assert.Equal(6, num.Choose(2));
+            }
+        }
     }
 }

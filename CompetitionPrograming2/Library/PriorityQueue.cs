@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using static CompetitionPrograming2.Settings;
 
 namespace CompetitionPrograming2.Library
 {
-    public class PriorityQueue<T> : IEnumerable<T> where T : IComparable<T>
+    public class PriorityQueue<T> : IEnumerable<T>, IReadOnlyCollection<T> where T : IComparable<T>
     {
         private readonly Priority priority;
         private List<T> heap = new List<T> { default(T) };
@@ -16,15 +14,15 @@ namespace CompetitionPrograming2.Library
         {
             priority = p;
         }
-        public int Count() => heap.Count - 1;
+        public int Count => heap.Count - 1;
         public T Peek()
         {
-            if (Count() <= 0) { throw new Exception("要素が空です"); }
+            if (Count <= 0) { throw new Exception("要素が空です"); }
             return heap[1];
         }
         public T Dequeue()
         {
-            if (Count() <= 0) { throw new Exception("要素が空です"); }
+            if (Count <= 0) { throw new Exception("要素が空です"); }
 
             var max = heap[1];
             heap[1] = heap[heap.Count - 1];
@@ -88,7 +86,7 @@ namespace CompetitionPrograming2.Library
         private static int Right(int i) => i * 2 + 1;
         private int Compare(T x, T y) => priority == Priority.Larger ? x.CompareTo(y) : y.CompareTo(x);
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => heap.Skip(1).GetEnumerator();
-        public IEnumerator GetEnumerator()
+        public System.Collections.IEnumerator GetEnumerator()
         {
             return heap.Skip(1).GetEnumerator();
         }

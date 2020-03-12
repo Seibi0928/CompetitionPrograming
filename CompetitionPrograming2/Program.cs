@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
+using System.Text;
 using static System.Math;
 
 namespace CompetitionPrograming2
@@ -79,6 +81,13 @@ namespace CompetitionPrograming2
             item1 = item2;
             item2 = tmp;
         }
+        protected static IEnumerable<char> AtoZ()
+        {
+            for (char i = 'a'; i <= 'z'; i++)
+            {
+                yield return i;
+            }
+        }
         protected sealed class SetConsole : IDisposable
         {
             readonly StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
@@ -97,6 +106,34 @@ namespace CompetitionPrograming2
     }
     public static class ExtentionsLibrary
     {
+        public static long Combination(this long num, long m)
+        {
+            if (num == m) { return 1; }
+            if (m == 0) { return 1; }
+            BigInteger ans = 1;
+            var tmpM = m;
+            while (tmpM > 0)
+            {
+                ans *= num;
+                num--;
+                tmpM--;
+            }
+            while (m > 0)
+            {
+                ans /= m;
+                m--;
+            }
+            return (long)ans;
+        }
+        public static int Factorial(this int num)
+        {
+            var result = 1;
+            for (int i = 1; i <= num; i++)
+            {
+                result *= i;
+            }
+            return result;
+        }
         public static T[] NextPermutation<T>(this IEnumerable<T> collection) where T : IComparable
         {
             var array = collection.ToArray();
@@ -174,8 +211,6 @@ namespace CompetitionPrograming2
         }
         public static T[] ToArray<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
         {
-            if (typeof(T) == typeof(string)) { return (T[])(object)str.Split(); }
-
             return str.ConvertEnumerator<T>().ToArray();
         }
         public static List<T> ToList<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
@@ -259,12 +294,104 @@ namespace CompetitionPrograming2
             return l;
         }
     }
-    public sealed class Settings
+
+    public struct Mint
     {
-        public enum Priority : byte
+        public static long MOD = (long)1e9 + 7;
+
+        /// <summary>
+        /// 0以上MOD未満の整数
+        /// </summary>
+        public long Value;
+
+        public Mint(long val)
         {
-            Smaller = 0,
-            Larger = 1
+            Value = val % MOD;
+            if (Value < 0) Value += MOD;
         }
+
+        private static Mint Ctor(long val)
+        {
+            return new Mint() { Value = val };
+        }
+
+        public static Mint operator +(Mint a, Mint b)
+        {
+            long res = a.Value + b.Value;
+            if (res > MOD) res -= MOD;
+            return Ctor(res);
+        }
+        public static Mint operator -(Mint a, Mint b)
+        {
+            long res = a.Value - b.Value;
+            if (res < 0) res += MOD;
+            return Ctor(res);
+        }
+
+        public static Mint operator *(Mint a, Mint b)
+        {
+            long res = a.Value * b.Value;
+            if (res > MOD) res %= MOD;
+            return Ctor(res);
+        }
+
+        public static Mint operator /(Mint a, Mint b)
+        {
+            return a * Inv(b);
+        }
+
+        public static Mint Pow(Mint a, long n)
+        {
+            if (n == 0) return new Mint(1);
+            Mint b = Pow(a, n >> 1);
+            b *= b;
+            if ((n & 1) == 1) b *= a;
+            return b;
+        }
+
+        public static Mint Inv(Mint n)
+        {
+            long a = n.Value;
+            long b = MOD;
+
+            long x = 1;
+            long u = 0;
+            while (b != 0)
+            {
+                long k = a / b;
+                long _x = u;
+                u = x - k * u;
+                x = _x;
+
+                long _a = a;
+                a = b;
+                b = _a - (k * b);
+            }
+
+            return new Mint(x);
+        }
+
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
+        public static implicit operator Mint(long a) { return new Mint(a); }
+        public static explicit operator long(Mint a) { return a.Value; }
+        public static Mint Choose(long n, long k)
+        {
+            Mint numerator = 1, denominator = 1;
+            for (int i = 0; i < k; i++)
+            {
+                numerator *= n - i;
+                denominator *= i + 1;
+            }
+            return numerator / denominator;
+        }
+    }
+    public enum Priority : byte
+    {
+        Smaller = 0,
+        Larger = 1
     }
 }
