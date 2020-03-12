@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Numerics;
-using System.Text;
-using static System.Math;
 
 namespace CompetitionPrograming2
 {
@@ -32,11 +29,7 @@ namespace CompetitionPrograming2
             var t = typeof(T);
             try
             {
-                if ((t == typeof(byte)))
-                {
-                    return (T)(object)str.ToByte();
-                }
-                else if (t == typeof(int))
+                if (t == typeof(int))
                 {
                     return (T)(object)str.ToInt();
                 }
@@ -63,18 +56,8 @@ namespace CompetitionPrograming2
             }
             throw new NotSupportedException();
         }
-        protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
-        {
-            return GetString().ToArray<T>();
-        }
-        protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
-        {
-            return GetString().ToList<T>();
-        }
-        protected static TResult[] GetArray<TResult>(Func<string, TResult> selector)
-        {
-            return (TResult[])(object)GetString().Split().Select(selector).ToArray();
-        }
+        protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToArray<T>(GetString());
+        protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToList<T>(GetString());
         protected static void Swap<T>(ref T item1, ref T item2)
         {
             var tmp = item1;
@@ -87,6 +70,45 @@ namespace CompetitionPrograming2
             {
                 yield return i;
             }
+        }
+        private static T[] ToArray<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        {
+            return ConvertEnumerator<T>(str).ToArray();
+        }
+        private static List<T> ToList<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        {
+            if (typeof(T) == typeof(string)) { return (List<T>)(object)str.Split().ToList(); }
+
+            return ConvertEnumerator<T>(str).ToList();
+        }
+        private static IEnumerable<T> ConvertEnumerator<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        {
+            var t = typeof(T);
+            if (t == typeof(byte))
+            {
+                return (IEnumerable<T>)str.Split().Select(byte.Parse);
+            }
+            if (t == typeof(int))
+            {
+                return (IEnumerable<T>)str.Split().Select(int.Parse);
+            }
+            if (t == typeof(long))
+            {
+                return (IEnumerable<T>)str.Split().Select(long.Parse);
+            }
+            if (t == typeof(double))
+            {
+                return (IEnumerable<T>)str.Split().Select(double.Parse);
+            }
+            if (t == typeof(decimal))
+            {
+                return (IEnumerable<T>)str.Split().Select(decimal.Parse);
+            }
+            if (t == typeof(BigInteger))
+            {
+                return (IEnumerable<T>)str.Split().Select(BigInteger.Parse);
+            }
+            throw new NotSupportedException();
         }
         protected sealed class SetConsole : IDisposable
         {
@@ -125,9 +147,9 @@ namespace CompetitionPrograming2
             }
             return (long)ans;
         }
-        public static int Factorial(this int num)
+        public static long Factorial(this long num)
         {
-            var result = 1;
+            var result = 1L;
             for (int i = 1; i <= num; i++)
             {
                 result *= i;
@@ -201,55 +223,6 @@ namespace CompetitionPrograming2
             }
             if (n != 1) { yield return Tuple.Create(n, 1); }
         }
-        public static T[,] CopyArray<T>(this T[,] array)
-        {
-            var firstDimentionLength = array.GetLength(0);
-            var secondDimentionLength = array.GetLength(1);
-            var newDArray = new T[firstDimentionLength, secondDimentionLength];
-            Array.Copy(array, newDArray, firstDimentionLength * secondDimentionLength);
-            return newDArray;
-        }
-        public static T[] ToArray<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
-        {
-            return str.ConvertEnumerator<T>().ToArray();
-        }
-        public static List<T> ToList<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
-        {
-            if (typeof(T) == typeof(string)) { return (List<T>)(object)str.Split().ToList(); }
-
-            return str.ConvertEnumerator<T>().ToList();
-        }
-        public static IEnumerable<T> ConvertEnumerator<T>(this string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
-        {
-            var t = typeof(T);
-            if (t == typeof(byte))
-            {
-                return (IEnumerable<T>)str.Split().Select(byte.Parse);
-            }
-            if (t == typeof(int))
-            {
-                return (IEnumerable<T>)str.Split().Select(int.Parse);
-            }
-            if (t == typeof(long))
-            {
-                return (IEnumerable<T>)str.Split().Select(long.Parse);
-            }
-            if (t == typeof(double))
-            {
-                return (IEnumerable<T>)str.Split().Select(double.Parse);
-            }
-            if (t == typeof(decimal))
-            {
-                return (IEnumerable<T>)str.Split().Select(decimal.Parse);
-            }
-            if (t == typeof(BigInteger))
-            {
-                return (IEnumerable<T>)str.Split().Select(BigInteger.Parse);
-            }
-            throw new NotSupportedException();
-        }
-        public static byte ToByte(this string str) => byte.Parse(str);
-        public static byte ToByte(this char chr) => byte.Parse(chr.ToString());
         public static int ToInt(this string str) => int.Parse(str);
         public static int ToInt(this char chr) => int.Parse(chr.ToString());
         public static long ToLong(this string str) => long.Parse(str);
@@ -257,8 +230,8 @@ namespace CompetitionPrograming2
         public static decimal ToDecimal(this string str) => decimal.Parse(str);
         public static BigInteger ToBigInteger(this string str) => BigInteger.Parse(str);
         public static DateTime ToDateTime(this string str) => DateTime.Parse(str);
-        public static string StringJoin(this object[] array, string separator = "") => string.Join(separator, array);
         public static string StringJoin<T>(this IEnumerable<T> collection, string separator = "") => string.Join(separator, collection.Select(c => c.ToString()));
+        public static string StringConcat(this IEnumerable<char> collection) => string.Concat(collection);
         public static int LowerBound<T>(this IReadOnlyList<T> a, T v) => LowerBound(a, v, Comparer<T>.Default);
         public static int LowerBound<T>(this IReadOnlyList<T> a, T v, Comparer<T> cmp)
         {
@@ -297,7 +270,7 @@ namespace CompetitionPrograming2
 
     public struct Mint
     {
-        public static long MOD = (long)1e9 + 7;
+        private static readonly long MOD = (long)1e9 + 7;
 
         /// <summary>
         /// 0以上MOD未満の整数
@@ -310,11 +283,7 @@ namespace CompetitionPrograming2
             if (Value < 0) Value += MOD;
         }
 
-        private static Mint Ctor(long val)
-        {
-            return new Mint() { Value = val };
-        }
-
+        private static Mint Ctor(long val) => new Mint() { Value = val };
         public static Mint operator +(Mint a, Mint b)
         {
             long res = a.Value + b.Value;
@@ -327,19 +296,13 @@ namespace CompetitionPrograming2
             if (res < 0) res += MOD;
             return Ctor(res);
         }
-
         public static Mint operator *(Mint a, Mint b)
         {
             long res = a.Value * b.Value;
             if (res > MOD) res %= MOD;
             return Ctor(res);
         }
-
-        public static Mint operator /(Mint a, Mint b)
-        {
-            return a * Inv(b);
-        }
-
+        public static Mint operator /(Mint a, Mint b) => a * Inv(b);
         public static Mint Pow(Mint a, long n)
         {
             if (n == 0) return new Mint(1);
@@ -348,7 +311,6 @@ namespace CompetitionPrograming2
             if ((n & 1) == 1) b *= a;
             return b;
         }
-
         public static Mint Inv(Mint n)
         {
             long a = n.Value;
@@ -370,14 +332,9 @@ namespace CompetitionPrograming2
 
             return new Mint(x);
         }
-
-        public override string ToString()
-        {
-            return Value.ToString();
-        }
-
-        public static implicit operator Mint(long a) { return new Mint(a); }
-        public static explicit operator long(Mint a) { return a.Value; }
+        public override string ToString() => Value.ToString();
+        public static implicit operator Mint(long a) => new Mint(a);
+        public static explicit operator long(Mint a) => a.Value;
         public static Mint Choose(long n, long k)
         {
             Mint numerator = 1, denominator = 1;
