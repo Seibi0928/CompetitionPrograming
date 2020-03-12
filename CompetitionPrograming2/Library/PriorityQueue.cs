@@ -56,18 +56,18 @@ namespace CompetitionPrograming2.Library
             {
                 largest = i;
             }
+
             if (r <= heap.Count - 1 && Compare(heap[r], heap[largest]) > 0)
             {
                 largest = r;
             }
 
-            if (largest != i)
-            {
-                var temp = heap[i];
-                heap[i] = heap[largest];
-                heap[largest] = temp;
-                MaxHeapify(largest);
-            }
+            if (largest == i) { return; }
+
+            var temp = heap[i];
+            heap[i] = heap[largest];
+            heap[largest] = temp;
+            MaxHeapify(largest);
         }
         private void HeapIncreaseKey(T key)
         {
@@ -88,7 +88,7 @@ namespace CompetitionPrograming2.Library
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => heap.Skip(1).GetEnumerator();
         public System.Collections.IEnumerator GetEnumerator()
         {
-            return heap.Skip(1).GetEnumerator();
+            return heap.Skip(0).GetEnumerator();
         }
     }
 }
