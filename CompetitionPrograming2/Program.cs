@@ -147,6 +147,11 @@ namespace CompetitionPrograming2
             }
             return (long)ans;
         }
+        /// <summary>
+        /// 階乗を求める
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
         public static long Factorial(this long num)
         {
             var result = 1L;
@@ -204,6 +209,11 @@ namespace CompetitionPrograming2
             } while (tmp != 0);
             return a;
         }
+        /// <summary>
+        /// 素因数分解を行う
+        /// </summary>
+        /// <param name="num"></param>
+        /// <returns></returns>
         public static IEnumerable<Tuple<long, int>> Factorize(this long n)
         {
             yield return Tuple.Create(1L, 1);
