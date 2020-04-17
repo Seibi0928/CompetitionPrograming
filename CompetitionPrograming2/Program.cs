@@ -236,7 +236,8 @@ namespace CompetitionPrograming2
         public static string StringJoin<T>(this IEnumerable<T> collection, string separator = "") => string.Join(separator, collection.Select(c => c.ToString()));
         public static string StringConcat(this IEnumerable<char> collection) => string.Concat(collection);
         public static int LowerBound<T>(this IReadOnlyList<T> a, T v) => LowerBound(a, v, Comparer<T>.Default);
-        public static int LowerBound<T>(this IReadOnlyList<T> a, T v, Comparer<T> cmp)
+        public static int LowerBound(this IReadOnlyList<string> str, string v) => LowerBound(str, v, StringComparer.Ordinal);
+        public static int LowerBound<T>(this IReadOnlyList<T> a, T v, IComparer<T> cmp)
         {
             var l = 0;
             var r = a.Count - 1;
@@ -255,8 +256,9 @@ namespace CompetitionPrograming2
             }
             return l;
         }
+        public static int UpperBound(this IReadOnlyList<string> str, string v) => UpperBound(str, v, StringComparer.Ordinal);
         public static int UpperBound<T>(this IReadOnlyList<T> a, T v) => UpperBound(a, v, Comparer<T>.Default);
-        public static int UpperBound<T>(this IReadOnlyList<T> a, T v, Comparer<T> cmp)
+        public static int UpperBound<T>(this IReadOnlyList<T> a, T v, IComparer<T> cmp)
         {
             var l = 0;
             var r = a.Count - 1;
@@ -268,6 +270,14 @@ namespace CompetitionPrograming2
                 else r = mid - 1;
             }
             return l;
+        }
+        public static IOrderedEnumerable<TSource> OrderBy<TSource>(this IEnumerable<TSource> source, Func<TSource, string> keySelector)
+        {
+            return source.OrderBy(keySelector, StringComparer.Ordinal);
+        }
+        public static IOrderedEnumerable<TSource> OrderByDescending<TSource>(this IEnumerable<TSource> source, Func<TSource, string> keySelector)
+        {
+            return source.OrderByDescending(keySelector, StringComparer.Ordinal);
         }
     }
 
