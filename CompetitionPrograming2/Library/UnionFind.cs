@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 
 namespace CompetitionPrograming2.Library
 {
@@ -29,7 +26,7 @@ namespace CompetitionPrograming2.Library
         }
 
         /// <summary>
-        /// 引数が属する集合同士を連結する
+        /// 両引数が属する集合同士を連結する
         /// </summary>
         /// <param name="x">ノード1</param>
         /// <param name="y">ノード1</param>
@@ -51,7 +48,7 @@ namespace CompetitionPrograming2.Library
         }
 
         /// <summary>
-        /// 引数が属する集合が同じかどうか
+        /// 両引数が属する集合が同じかどうか
         /// </summary>
         /// <param name="x">ノード1</param>
         /// <param name="y">ノード2</param>
