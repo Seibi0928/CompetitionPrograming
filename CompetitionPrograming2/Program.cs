@@ -16,7 +16,7 @@ namespace CompetitionPrograming2
     public abstract class BaseProgram
     {
         protected readonly static long divisor = 1000000007;
-        protected static void Write(object obj) => Console.WriteLine(obj);
+        protected static Action<object> Write => Console.WriteLine;
         protected static string GetString()
         {
             var str = Console.ReadLine();
@@ -86,27 +86,27 @@ namespace CompetitionPrograming2
             var t = typeof(T);
             if (t == typeof(byte))
             {
-                return (IEnumerable<T>)str.Split().Select(byte.Parse);
+                return str.Split().Select(byte.Parse).Cast<T>();
             }
             if (t == typeof(int))
             {
-                return (IEnumerable<T>)str.Split().Select(int.Parse);
+                return str.Split().Select(int.Parse).Cast<T>();
             }
             if (t == typeof(long))
             {
-                return (IEnumerable<T>)str.Split().Select(long.Parse);
+                return str.Split().Select(long.Parse).Cast<T>();
             }
             if (t == typeof(double))
             {
-                return (IEnumerable<T>)str.Split().Select(double.Parse);
+                return str.Split().Select(double.Parse).Cast<T>();
             }
             if (t == typeof(decimal))
             {
-                return (IEnumerable<T>)str.Split().Select(decimal.Parse);
+                return str.Split().Select(decimal.Parse).Cast<T>();
             }
             if (t == typeof(BigInteger))
             {
-                return (IEnumerable<T>)str.Split().Select(BigInteger.Parse);
+                return str.Split().Select(BigInteger.Parse).Cast<T>();
             }
             throw new NotSupportedException();
         }
