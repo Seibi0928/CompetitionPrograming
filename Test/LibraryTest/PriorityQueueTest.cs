@@ -2,6 +2,7 @@
 using CompetitionPrograming2.Library;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Xunit;
 
@@ -28,6 +29,18 @@ namespace Test.LibraryTest
                 Assert.True(prev > dscQue.Peek());
                 prev = dscQue.Dequeue();
             }
+        }
+
+        [Fact, Description("要素の比較に際し、文字列型のみ別メソッドで行っているのでその検証")]
+        public void 要素が文字列の場合_降順設定で中身を列挙するとき大きいもの順で出てくる()
+        {
+            var sourceList = new List<string> { "bbb", "ccc", "aaa", "zzz" };
+            var ascStrQue = new PriorityQueue<string>(Priority.Larger);
+            ascStrQue.EnqueueRange(sourceList);
+            Assert.Equal("zzz", ascStrQue.Dequeue());
+            Assert.Equal("ccc", ascStrQue.Dequeue());
+            Assert.Equal("bbb", ascStrQue.Dequeue());
+            Assert.Equal("aaa", ascStrQue.Dequeue());
         }
 
         [Fact]
