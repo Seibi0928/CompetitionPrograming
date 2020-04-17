@@ -155,7 +155,7 @@ namespace Test.LibraryTest
         public void クリアすると中身がなくなる()
         {
             ascQue.Clear();
-            Assert.Equal(0, ascQue.Count());
+            Assert.Empty(ascQue);
         }
 
         public void Dispose() { }
