@@ -154,13 +154,13 @@ namespace CompetitionPrograming2
             }
             return result;
         }
-        public static T[] NextPermutation<T>(this IEnumerable<T> collection) where T : IComparable
+        private static T[] NextPermutation<T>(this IEnumerable<T> collection, IComparer<T> cmp) where T : IComparable
         {
             var array = collection.ToArray();
             int? exchangingNumIndex = null;
             for (int i = 1; i < array.Length; i++)
             {
-                if (array[i - 1].CompareTo(array[i]) >= 0) { continue; }
+                if (cmp.Compare(array[i - 1], array[i]) >= 0) { continue; }
 
                 exchangingNumIndex = i - 1;
             }
@@ -178,6 +178,14 @@ namespace CompetitionPrograming2
                 break;
             }
             return array;
+        }
+        public static string[] NextPermutation(this IEnumerable<string> collection)
+        {
+            return NextPermutation(collection, StringComparer.Ordinal);
+        }
+        public static T[] NextPermutation<T>(this IEnumerable<T> collection) where T : IComparable
+        {
+            return NextPermutation(collection, Comparer<T>.Default);
         }
         public static IEnumerable<T[]> Permutations<T>(this IEnumerable<T> collection) where T : IComparable
         {
