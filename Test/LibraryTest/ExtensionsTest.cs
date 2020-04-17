@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Linq;
+using CompetitionPrograming2;
 using Xunit;
-using System.Linq;
-using CompetitionPrograming2.Library;
 
 namespace Test.LibraryTest
 {

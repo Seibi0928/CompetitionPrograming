@@ -128,24 +128,17 @@ namespace CompetitionPrograming2
     }
     public static class ExtentionsLibrary
     {
-        public static long Combination(this long num, long m)
+        public static long Choose(this int n, int a, long divisor = 1000000007)
         {
-            if (num == m) { return 1; }
-            if (m == 0) { return 1; }
-            BigInteger ans = 1;
-            var tmpM = m;
-            while (tmpM > 0)
+            long numerator = 1, denominator = 1;
+            for (int i = 0; i < a; i++)
             {
-                ans *= num;
-                num--;
-                tmpM--;
+                numerator *= n - i;
+                numerator %= divisor;
+                denominator *= i + 1;
+                denominator %= divisor;
             }
-            while (m > 0)
-            {
-                ans /= m;
-                m--;
-            }
-            return (long)ans;
+            return numerator / denominator;
         }
         /// <summary>
         /// 階乗を求める
