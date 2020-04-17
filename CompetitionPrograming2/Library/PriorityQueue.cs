@@ -84,7 +84,16 @@ namespace CompetitionPrograming2.Library
         private static int Parent(int i) => i / 2;
         private static int Left(int i) => i * 2;
         private static int Right(int i) => i * 2 + 1;
-        private int Compare(T x, T y) => priority == Priority.Larger ? x.CompareTo(y) : y.CompareTo(x);
+        private int Compare(T x, T y)
+        {
+            var isLarger = priority == Priority.Larger;
+            if (typeof(string) == typeof(T))
+            {
+                return isLarger ? StringComparer.Ordinal.Compare(x, y) : StringComparer.Ordinal.Compare(y, x);
+            }
+
+            return isLarger ? x.CompareTo(y) : y.CompareTo(x);
+        }
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => heap.Skip(1).GetEnumerator();
         public System.Collections.IEnumerator GetEnumerator()
         {
