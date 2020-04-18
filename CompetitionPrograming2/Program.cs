@@ -20,41 +20,21 @@ namespace CompetitionPrograming2
         protected static string GetString()
         {
             var str = Console.ReadLine();
-            if (str == null) { throw new NullReferenceException("標準入力がnullです Solveメソッド内の解答コードが間違っています"); }
+            if (str is null) { throw new NullReferenceException("標準入力がnullです Solveメソッド内の解答コードが間違っています"); }
             return str;
         }
         protected static T GetNumber<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             var str = GetString();
-            var t = typeof(T);
-            try
+            return Activator.CreateInstance<T>() switch
             {
-                if (t == typeof(int))
-                {
-                    return (T)(object)str.ToInt();
-                }
-                else if (t == typeof(long))
-                {
-                    return (T)(object)str.ToLong();
-                }
-                else if (t == typeof(double))
-                {
-                    return (T)(object)str.ToDouble();
-                }
-                else if (t == typeof(decimal))
-                {
-                    return (T)(object)str.ToDecimal();
-                }
-                else if (t == typeof(BigInteger))
-                {
-                    return (T)(object)str.ToBigInteger();
-                }
-            }
-            catch (OverflowException)
-            {
-                throw new OverflowException("より大きい数値型を指定してください");
-            }
-            throw new NotSupportedException();
+                int _ => (T)(object)str.ToInt(),
+                long _ => (T)(object)str.ToLong(),
+                double _ => (T)(object)str.ToDouble(),
+                decimal _ => (T)(object)str.ToDecimal(),
+                BigInteger _ => (T)(object)str.ToBigInteger(),
+                _ => throw new NotSupportedException(),
+            };
         }
         protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToArray<T>(GetString());
         protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToList<T>(GetString());
@@ -77,38 +57,20 @@ namespace CompetitionPrograming2
         }
         private static List<T> ToList<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
         {
-            if (typeof(T) == typeof(string)) { return (List<T>)(object)str.Split().ToList(); }
-
             return ConvertEnumerator<T>(str).ToList();
         }
         private static IEnumerable<T> ConvertEnumerator<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
         {
-            var t = typeof(T);
-            if (t == typeof(byte))
+            return Activator.CreateInstance<T>() switch
             {
-                return str.Split().Select(byte.Parse).Cast<T>();
-            }
-            if (t == typeof(int))
-            {
-                return str.Split().Select(int.Parse).Cast<T>();
-            }
-            if (t == typeof(long))
-            {
-                return str.Split().Select(long.Parse).Cast<T>();
-            }
-            if (t == typeof(double))
-            {
-                return str.Split().Select(double.Parse).Cast<T>();
-            }
-            if (t == typeof(decimal))
-            {
-                return str.Split().Select(decimal.Parse).Cast<T>();
-            }
-            if (t == typeof(BigInteger))
-            {
-                return str.Split().Select(BigInteger.Parse).Cast<T>();
-            }
-            throw new NotSupportedException();
+                byte _ => str.Split().Select(byte.Parse).Cast<T>(),
+                int _ => str.Split().Select(int.Parse).Cast<T>(),
+                long _ => str.Split().Select(long.Parse).Cast<T>(),
+                double _ => str.Split().Select(double.Parse).Cast<T>(),
+                decimal _ => str.Split().Select(decimal.Parse).Cast<T>(),
+                BigInteger _ => str.Split().Select(BigInteger.Parse).Cast<T>(),
+                _ => throw new NotSupportedException()
+            };
         }
         protected sealed class SetConsole : IDisposable
         {
@@ -165,11 +127,11 @@ namespace CompetitionPrograming2
                 exchangingNumIndex = i - 1;
             }
 
-            if (exchangingNumIndex == null) { return null; }
+            if (exchangingNumIndex is null) { return null; }
 
             for (int j = array.Length - 1; j >= 0; j--)
             {
-                if (array[(int)exchangingNumIndex].CompareTo(array[j]) >= 0) { continue; }
+                if (cmp.Compare(array[(int)exchangingNumIndex],array[j]) >= 0) { continue; }
 
                 var tmp = array[j];
                 array[j] = array[(int)exchangingNumIndex];
@@ -215,9 +177,9 @@ namespace CompetitionPrograming2
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static IEnumerable<Tuple<long, int>> Factorize(this long n)
+        public static IEnumerable<(long num, int count)> Factorize(this long n)
         {
-            yield return Tuple.Create(1L, 1);
+            yield return (1, 1);
             var rootN = Math.Sqrt(n);
             for (long i = 2; i <= rootN; i++)
             {
@@ -230,9 +192,9 @@ namespace CompetitionPrograming2
                     n /= i;
                     count++;
                 }
-                yield return Tuple.Create(i, count);
+                yield return (i, count);
             }
-            if (n != 1) { yield return Tuple.Create(n, 1); }
+            if (n != 1) { yield return (n, 1); }
         }
         public static int ToInt(this string str) => int.Parse(str);
         public static int ToInt(this char chr) => int.Parse(chr.ToString());

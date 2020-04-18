@@ -7,7 +7,7 @@ namespace CompetitionPrograming2.Library
     public class PriorityQueue<T> : IEnumerable<T>, IReadOnlyCollection<T> where T : IComparable<T>
     {
         private readonly Priority priority;
-        private List<T> heap = new List<T> { default(T) };
+        private List<T> heap = new List<T> { default };
 
         private PriorityQueue() { }
         public PriorityQueue(Priority p)
@@ -25,7 +25,7 @@ namespace CompetitionPrograming2.Library
             if (Count <= 0) { throw new Exception("要素が空です"); }
 
             var max = heap[1];
-            heap[1] = heap[heap.Count - 1];
+            heap[1] = heap[^1];
             heap.RemoveAt(heap.Count - 1);
             MaxHeapify(1);
             return max;
@@ -40,7 +40,7 @@ namespace CompetitionPrograming2.Library
         }
         public void Clear()
         {
-            heap = new List<T>() { default(T) };
+            heap = new List<T>() { default };
         }
         private void MaxHeapify(int i)
         {
