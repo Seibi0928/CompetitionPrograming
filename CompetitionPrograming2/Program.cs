@@ -169,7 +169,7 @@ namespace CompetitionPrograming2
 
             for (int j = array.Length - 1; j >= 0; j--)
             {
-                if (array[(int)exchangingNumIndex].CompareTo(array[j]) >= 0) { continue; }
+                if (cmp.Compare(array[(int)exchangingNumIndex], array[j]) >= 0) { continue; }
 
                 var tmp = array[j];
                 array[j] = array[(int)exchangingNumIndex];
