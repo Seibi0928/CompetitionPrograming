@@ -38,12 +38,7 @@ namespace CompetitionPrograming2
         }
         protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToArray<T>(GetString());
         protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToList<T>(GetString());
-        protected static void Swap<T>(ref T item1, ref T item2)
-        {
-            var tmp = item1;
-            item1 = item2;
-            item2 = tmp;
-        }
+        protected static void Swap<T>(ref T item1, ref T item2) => (item2, item1) = (item1, item2);
         protected static IEnumerable<char> AtoZ()
         {
             for (char i = 'a'; i <= 'z'; i++)
@@ -131,7 +126,7 @@ namespace CompetitionPrograming2
 
             for (int j = array.Length - 1; j >= 0; j--)
             {
-                if (cmp.Compare(array[(int)exchangingNumIndex],array[j]) >= 0) { continue; }
+                if (cmp.Compare(array[(int)exchangingNumIndex], array[j]) >= 0) { continue; }
 
                 var tmp = array[j];
                 array[j] = array[(int)exchangingNumIndex];
