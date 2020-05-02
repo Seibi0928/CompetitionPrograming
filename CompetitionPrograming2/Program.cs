@@ -167,6 +167,7 @@ namespace CompetitionPrograming2
             } while (tmp != 0);
             return a;
         }
+        public static long Lcm(this long a, long b) => a * b / Gcd(a, b);
         /// <summary>
         /// 素因数分解を行う
         /// </summary>
