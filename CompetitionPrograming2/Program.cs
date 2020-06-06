@@ -11,6 +11,15 @@ namespace CompetitionPrograming2
         public static void Main(string[] _) { using (new SetConsole()) { Solve(); } }
         public static void Solve()
         {
+            var (a, b, n, _) = GetArray<double>();
+            if (n < b - 1)
+            {
+                Write(Math.Floor(a * n / b) - a * Math.Floor(n / b));
+            }
+            else
+            {
+                Write(Math.Floor(a * (b - 1) / b) - a * Math.Floor((b - 1) / b));
+            }
         }
     }
     public abstract class BaseProgram
@@ -248,12 +257,21 @@ namespace CompetitionPrograming2
         public static void Deconstruct<T>
         (
             this IList<T> self,
-            out T first,
-            out IList<T> rest
+            out T first
         )
         {
-            first = self.Count > 0 ? self[0] : default;
-            rest = self.Skip(1).ToArray();
+            first = self[0];
+        }
+
+        public static void Deconstruct<T>
+        (
+            this IList<T> self,
+            out T first,
+            out T second
+        )
+        {
+            first = self[0];
+            second = self[1];
         }
 
         public static void Deconstruct<T>
@@ -261,12 +279,12 @@ namespace CompetitionPrograming2
             this IList<T> self,
             out T first,
             out T second,
-            out IList<T> rest
+            out T third
         )
         {
-            first = self.Count > 0 ? self[0] : default;
-            second = self.Count > 1 ? self[1] : default;
-            rest = self.Skip(2).ToArray();
+            first = self[0];
+            second = self[1];
+            third = self[2];
         }
 
         public static void Deconstruct<T>
@@ -275,30 +293,29 @@ namespace CompetitionPrograming2
             out T first,
             out T second,
             out T third,
-            out IList<T> rest
+            out T forth
         )
         {
-            first = self.Count > 0 ? self[0] : default;
-            second = self.Count > 1 ? self[1] : default;
-            third = self.Count > 2 ? self[2] : default;
-            rest = self.Skip(3).ToArray();
+            first = self[0];
+            second = self[1];
+            third = self[2];
+            forth = self[3];
         }
-
         public static void Deconstruct<T>
         (
             this IList<T> self,
             out T first,
             out T second,
             out T third,
-            out T four,
-            out IList<T> rest
+            out T forth,
+            out T fifth
         )
         {
-            first = self.Count > 0 ? self[0] : default;
-            second = self.Count > 1 ? self[1] : default;
-            third = self.Count > 2 ? self[2] : default;
-            four = self.Count > 3 ? self[3] : default;
-            rest = self.Skip(4).ToArray();
+            first = self[0];
+            second = self[1];
+            third = self[2];
+            forth = self[3];
+            fifth = self[4];
         }
     }
 
