@@ -10,7 +10,7 @@ namespace CompetitionPrograming2
     {
         public static void Main(string[] _) { using (new SetConsole()) { Solve(); } }
         public static void Solve()
-        {            
+        {
         }
     }
     public abstract class BaseProgram
@@ -20,50 +20,25 @@ namespace CompetitionPrograming2
         protected static string GetString()
         {
             var str = Console.ReadLine();
-            if (str == null) { throw new NullReferenceException("標準入力がnullです Solveメソッド内の解答コードが間違っています"); }
+            if (str is null) { throw new NullReferenceException("標準入力がnullです Solveメソッド内の解答コードが間違っています"); }
             return str;
         }
         protected static T GetNumber<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
             var str = GetString();
-            var t = typeof(T);
-            try
+            return Activator.CreateInstance<T>() switch
             {
-                if (t == typeof(int))
-                {
-                    return (T)(object)str.ToInt();
-                }
-                else if (t == typeof(long))
-                {
-                    return (T)(object)str.ToLong();
-                }
-                else if (t == typeof(double))
-                {
-                    return (T)(object)str.ToDouble();
-                }
-                else if (t == typeof(decimal))
-                {
-                    return (T)(object)str.ToDecimal();
-                }
-                else if (t == typeof(BigInteger))
-                {
-                    return (T)(object)str.ToBigInteger();
-                }
-            }
-            catch (OverflowException)
-            {
-                throw new OverflowException("より大きい数値型を指定してください");
-            }
-            throw new NotSupportedException();
+                int _ => (T)(object)str.ToInt(),
+                long _ => (T)(object)str.ToLong(),
+                double _ => (T)(object)str.ToDouble(),
+                decimal _ => (T)(object)str.ToDecimal(),
+                BigInteger _ => (T)(object)str.ToBigInteger(),
+                _ => throw new NotSupportedException(),
+            };
         }
-        protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToArray<T>(GetString());
-        protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToList<T>(GetString());
-        protected static void Swap<T>(ref T item1, ref T item2)
-        {
-            var tmp = item1;
-            item1 = item2;
-            item2 = tmp;
-        }
+        protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IEquatable<T> => ToArray<T>(GetString());
+        protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IEquatable<T> => ToList<T>(GetString());
+        protected static void Swap<T>(ref T item1, ref T item2) => (item2, item1) = (item1, item2);
         protected static IEnumerable<char> AtoZ()
         {
             for (char i = 'a'; i <= 'z'; i++)
@@ -71,44 +46,26 @@ namespace CompetitionPrograming2
                 yield return i;
             }
         }
-        private static T[] ToArray<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        private static T[] ToArray<T>(string str) where T : IComparable, IComparable<T>, IEquatable<T>
         {
             return ConvertEnumerator<T>(str).ToArray();
         }
-        private static List<T> ToList<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        private static List<T> ToList<T>(string str) where T : IComparable, IComparable<T>, IEquatable<T>
         {
-            if (typeof(T) == typeof(string)) { return (List<T>)(object)str.Split().ToList(); }
-
             return ConvertEnumerator<T>(str).ToList();
         }
-        private static IEnumerable<T> ConvertEnumerator<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        private static IEnumerable<T> ConvertEnumerator<T>(string str) where T : IComparable, IComparable<T>, IEquatable<T>
         {
-            var t = typeof(T);
-            if (t == typeof(byte))
+            return Activator.CreateInstance<T>() switch
             {
-                return str.Split().Select(byte.Parse).Cast<T>();
-            }
-            if (t == typeof(int))
-            {
-                return str.Split().Select(int.Parse).Cast<T>();
-            }
-            if (t == typeof(long))
-            {
-                return str.Split().Select(long.Parse).Cast<T>();
-            }
-            if (t == typeof(double))
-            {
-                return str.Split().Select(double.Parse).Cast<T>();
-            }
-            if (t == typeof(decimal))
-            {
-                return str.Split().Select(decimal.Parse).Cast<T>();
-            }
-            if (t == typeof(BigInteger))
-            {
-                return str.Split().Select(BigInteger.Parse).Cast<T>();
-            }
-            throw new NotSupportedException();
+                byte _ => str.Split().Select(byte.Parse).Cast<T>(),
+                int _ => str.Split().Select(int.Parse).Cast<T>(),
+                long _ => str.Split().Select(long.Parse).Cast<T>(),
+                double _ => str.Split().Select(double.Parse).Cast<T>(),
+                decimal _ => str.Split().Select(decimal.Parse).Cast<T>(),
+                BigInteger _ => str.Split().Select(BigInteger.Parse).Cast<T>(),
+                _ => throw new NotSupportedException()
+            };
         }
         protected sealed class SetConsole : IDisposable
         {
@@ -165,7 +122,7 @@ namespace CompetitionPrograming2
                 exchangingNumIndex = i - 1;
             }
 
-            if (exchangingNumIndex == null) { return null; }
+            if (exchangingNumIndex is null) { return null; }
 
             for (int j = array.Length - 1; j >= 0; j--)
             {
@@ -210,14 +167,15 @@ namespace CompetitionPrograming2
             } while (tmp != 0);
             return a;
         }
+        public static long Lcm(this long a, long b) => a * b / Gcd(a, b);
         /// <summary>
         /// 素因数分解を行う
         /// </summary>
         /// <param name="num"></param>
         /// <returns></returns>
-        public static IEnumerable<Tuple<long, int>> Factorize(this long n)
+        public static IEnumerable<(long num, int count)> Factorize(this long n)
         {
-            yield return Tuple.Create(1L, 1);
+            yield return (1, 1);
             var rootN = Math.Sqrt(n);
             for (long i = 2; i <= rootN; i++)
             {
@@ -230,9 +188,9 @@ namespace CompetitionPrograming2
                     n /= i;
                     count++;
                 }
-                yield return Tuple.Create(i, count);
+                yield return (i, count);
             }
-            if (n != 1) { yield return Tuple.Create(n, 1); }
+            if (n != 1) { yield return (n, 1); }
         }
         public static int ToInt(this string str) => int.Parse(str);
         public static int ToInt(this char chr) => int.Parse(chr.ToString());
@@ -290,12 +248,21 @@ namespace CompetitionPrograming2
         public static void Deconstruct<T>
         (
             this IList<T> self,
-            out T first,
-            out IList<T> rest
+            out T first
         )
         {
-            first = self.Count > 0 ? self[0] : default;
-            rest = self.Skip(1).ToArray();
+            first = self[0];
+        }
+
+        public static void Deconstruct<T>
+        (
+            this IList<T> self,
+            out T first,
+            out T second
+        )
+        {
+            first = self[0];
+            second = self[1];
         }
 
         public static void Deconstruct<T>
@@ -303,12 +270,12 @@ namespace CompetitionPrograming2
             this IList<T> self,
             out T first,
             out T second,
-            out IList<T> rest
+            out T third
         )
         {
-            first = self.Count > 0 ? self[0] : default;
-            second = self.Count > 1 ? self[1] : default;
-            rest = self.Skip(2).ToArray();
+            first = self[0];
+            second = self[1];
+            third = self[2];
         }
 
         public static void Deconstruct<T>
@@ -317,30 +284,29 @@ namespace CompetitionPrograming2
             out T first,
             out T second,
             out T third,
-            out IList<T> rest
+            out T forth
         )
         {
-            first = self.Count > 0 ? self[0] : default;
-            second = self.Count > 1 ? self[1] : default;
-            third = self.Count > 2 ? self[2] : default;
-            rest = self.Skip(3).ToArray();
+            first = self[0];
+            second = self[1];
+            third = self[2];
+            forth = self[3];
         }
-
         public static void Deconstruct<T>
         (
             this IList<T> self,
             out T first,
             out T second,
             out T third,
-            out T four,
-            out IList<T> rest
+            out T forth,
+            out T fifth
         )
         {
-            first = self.Count > 0 ? self[0] : default;
-            second = self.Count > 1 ? self[1] : default;
-            third = self.Count > 2 ? self[2] : default;
-            four = self.Count > 3 ? self[3] : default;
-            rest = self.Skip(4).ToArray();
+            first = self[0];
+            second = self[1];
+            third = self[2];
+            forth = self[3];
+            fifth = self[4];
         }
     }
 

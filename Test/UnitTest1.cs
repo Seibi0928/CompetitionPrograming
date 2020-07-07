@@ -33,16 +33,14 @@ namespace Test
 
         private void AssertInOut(string inputFileName, string outputFileName)
         {
-            using (var input = new StreamReader(inputFileName))
-            using (var output = new StringWriter())
-            {
-                Console.SetIn(input);
-                Console.SetOut(output);
+            using var input = new StreamReader(inputFileName);
+            using var output = new StringWriter();
+            Console.SetIn(input);
+            Console.SetOut(output);
 
-                Program.Solve();
+            Program.Solve();
 
-                Assert.Equal(File.ReadAllText(outputFileName).Trim(), output.ToString().Trim());
-            }
+            Assert.Equal(File.ReadAllText(outputFileName).Trim(), output.ToString().Trim());
         }
 
         private static readonly string Input1 = "Input1.txt";

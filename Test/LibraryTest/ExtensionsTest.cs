@@ -123,5 +123,20 @@ namespace Test.LibraryTest
                 Assert.Equal(6, num.Choose(2));
             }
         }
+
+        [Fact]
+        public void GcdTest()
+        {
+            Assert.Equal(1, 5L.Gcd(1));
+            Assert.Equal(3, 6L.Gcd(3));
+            Assert.Equal(2, 14L.Gcd(8));
+        }
+
+        [Fact]
+        public void LcmTest()
+        {
+            Assert.Equal(6, 2L.Lcm(3));
+            Assert.Equal(5, 1L.Lcm(5));
+        }
     }
 }
