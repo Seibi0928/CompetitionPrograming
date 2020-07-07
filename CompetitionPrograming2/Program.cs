@@ -11,15 +11,6 @@ namespace CompetitionPrograming2
         public static void Main(string[] _) { using (new SetConsole()) { Solve(); } }
         public static void Solve()
         {
-            var (a, b, n, _) = GetArray<double>();
-            if (n < b - 1)
-            {
-                Write(Math.Floor(a * n / b) - a * Math.Floor(n / b));
-            }
-            else
-            {
-                Write(Math.Floor(a * (b - 1) / b) - a * Math.Floor((b - 1) / b));
-            }
         }
     }
     public abstract class BaseProgram
@@ -45,8 +36,8 @@ namespace CompetitionPrograming2
                 _ => throw new NotSupportedException(),
             };
         }
-        protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToArray<T>(GetString());
-        protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T> => ToList<T>(GetString());
+        protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IEquatable<T> => ToArray<T>(GetString());
+        protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IEquatable<T> => ToList<T>(GetString());
         protected static void Swap<T>(ref T item1, ref T item2) => (item2, item1) = (item1, item2);
         protected static IEnumerable<char> AtoZ()
         {
@@ -55,15 +46,15 @@ namespace CompetitionPrograming2
                 yield return i;
             }
         }
-        private static T[] ToArray<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        private static T[] ToArray<T>(string str) where T : IComparable, IComparable<T>, IEquatable<T>
         {
             return ConvertEnumerator<T>(str).ToArray();
         }
-        private static List<T> ToList<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        private static List<T> ToList<T>(string str) where T : IComparable, IComparable<T>, IEquatable<T>
         {
             return ConvertEnumerator<T>(str).ToList();
         }
-        private static IEnumerable<T> ConvertEnumerator<T>(string str) where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>
+        private static IEnumerable<T> ConvertEnumerator<T>(string str) where T : IComparable, IComparable<T>, IEquatable<T>
         {
             return Activator.CreateInstance<T>() switch
             {
