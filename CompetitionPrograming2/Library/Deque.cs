@@ -38,7 +38,7 @@ namespace CompetitionPrograming2.Library
         {
             if (Length == Capacity)
             {
-                Resize();
+                Resize2();
             }
 
             Buffer[LastIndex] = data;
@@ -48,7 +48,7 @@ namespace CompetitionPrograming2.Library
         {
             if (Length == Capacity)
             {
-                Resize();
+                Resize2();
             }
 
             var index = FirstIndex - 1;
@@ -81,7 +81,7 @@ namespace CompetitionPrograming2.Library
             Length--;
             return data;
         }
-        private void Resize()
+        private void Resize2()
         {
             var newArray = new T[Capacity * 2];
             for (int i = 0; i < Length; i++)
