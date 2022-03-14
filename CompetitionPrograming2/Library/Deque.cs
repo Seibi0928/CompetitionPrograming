@@ -30,6 +30,7 @@ namespace CompetitionPrograming2.Library
         public int Length;
         public Deque(int capacity = 16)
         {
+            // テスト　さらに修正
             Capacity = capacity;
             Buffer = new T[Capacity];
             FirstIndex = 0;
