@@ -30,7 +30,6 @@ namespace CompetitionPrograming2.Library
         public int Length;
         public Deque(int capacity = 16)
         {
-            // テスト　さらに修正
             Capacity = capacity;
             Buffer = new T[Capacity];
             FirstIndex = 0;
@@ -39,7 +38,7 @@ namespace CompetitionPrograming2.Library
         {
             if (Length == Capacity)
             {
-                Resize2();
+                Resize();
             }
 
             Buffer[LastIndex] = data;
@@ -49,7 +48,7 @@ namespace CompetitionPrograming2.Library
         {
             if (Length == Capacity)
             {
-                Resize2();
+                Resize();
             }
 
             var index = FirstIndex - 1;
@@ -82,7 +81,7 @@ namespace CompetitionPrograming2.Library
             Length--;
             return data;
         }
-        private void Resize2()
+        private void Resize()
         {
             var newArray = new T[Capacity * 2];
             for (int i = 0; i < Length; i++)
