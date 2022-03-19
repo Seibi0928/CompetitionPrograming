@@ -8,7 +8,7 @@ namespace CompetitionPrograming2
 {
     public sealed class Program : BaseProgram
     {
-        public static void Main(string[] _) { using (new SetConsole()) { Solve(); } }
+        public static void Main(string[] _) { using (new ConsoleInitializer()) { Solve(); } }
         public static void Solve()
         {
         }
@@ -66,10 +66,10 @@ namespace CompetitionPrograming2
                 _ => throw new NotSupportedException()
             };
         }
-        protected sealed class SetConsole : IDisposable
+        protected sealed class ConsoleInitializer : IDisposable
         {
             readonly StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
-            public SetConsole()
+            public ConsoleInitializer()
             {
                 sw.AutoFlush = false;
                 Console.SetOut(sw);
