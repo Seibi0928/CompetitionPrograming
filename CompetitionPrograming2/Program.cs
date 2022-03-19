@@ -17,15 +17,14 @@ namespace CompetitionPrograming2
     {
         protected readonly static long divisor = 1000000007;
         protected static Action<object> Write => Console.WriteLine;
-        protected static string GetString()
+        protected static string ReadString()
         {
-            var str = Console.ReadLine();
-            if (str is null) { throw new NullReferenceException("標準入力がnullです Solveメソッド内の解答コードが間違っています"); }
-            return str;
+            return Console.ReadLine()
+                ?? throw new NullReferenceException("標準入力がnullです Solveメソッド内の解答コードが間違っています");
         }
-        protected static T GetNumber<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
+        protected static T ReadNumber<T>() where T : IComparable, IComparable<T>, IConvertible, IEquatable<T>, IFormattable
         {
-            var str = GetString();
+            var str = ReadString();
             return Activator.CreateInstance<T>() switch
             {
                 int _ => (T)(object)str.ToInt(),
@@ -36,8 +35,8 @@ namespace CompetitionPrograming2
                 _ => throw new NotSupportedException(),
             };
         }
-        protected static T[] GetArray<T>() where T : IComparable, IComparable<T>, IEquatable<T> => ToArray<T>(GetString());
-        protected static List<T> GetList<T>() where T : IComparable, IComparable<T>, IEquatable<T> => ToList<T>(GetString());
+        protected static T[] ReadArray<T>() where T : IComparable, IComparable<T>, IEquatable<T> => ToArray<T>(ReadString());
+        protected static List<T> ReadList<T>() where T : IComparable, IComparable<T>, IEquatable<T> => ToList<T>(ReadString());
         protected static void Swap<T>(ref T item1, ref T item2) => (item2, item1) = (item1, item2);
         protected static IEnumerable<char> AtoZ()
         {
